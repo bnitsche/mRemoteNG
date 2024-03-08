@@ -77,7 +77,8 @@ namespace mRemoteNG.App
         /// </param>
         public static void LoadConnections(bool withDialog = false)
         {
-            var connectionFileName = "";
+            // FIX 2024-03-08 (Bernhard Nitsche) - use last opened connection file
+            var connectionFileName = string.IsNullOrEmpty(Properties.App.Default.LastConnectionFile) ? ConnectionsService.GetStartupConnectionFileName() : Properties.App.Default.LastConnectionFile;
 
             try
             {
@@ -93,10 +94,12 @@ namespace mRemoteNG.App
                     connectionFileName = loadDialog.FileName;
                     Properties.OptionsDBsPage.Default.UseSQLServer = false;
                     Properties.OptionsDBsPage.Default.Save();
+                    Properties.App.Default.LastConnectionFile = connectionFileName;
+                    Properties.App.Default.Save();
                 }
                 else if (!Properties.OptionsDBsPage.Default.UseSQLServer)
                 {
-                    connectionFileName = ConnectionsService.GetStartupConnectionFileName();
+                    // use connection file name ...
                 }
 
                 ConnectionsService.LoadConnections(Properties.OptionsDBsPage.Default.UseSQLServer, false, connectionFileName);

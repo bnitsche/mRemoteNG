@@ -21,18 +21,21 @@ namespace mRemoteNG.App
         [STAThread]
         public static void Main(string[] args)
         {
-            var settingsManager = new LocalSettingsManager();
+            /*
+             LocalSettingsManager does not exist at all - removed! --> DB creation will not work!
+             */
+            //var settingsManager = new LocalSettingsManager();
 
-            // Check if the database exists
-            if (settingsManager.DatabaseExists())
-            {
-                Console.WriteLine("Database exists.");
-            }
-            else
-            {
-                Console.WriteLine("Database does not exist. Creating...");
-                settingsManager.CreateDatabase();
-            }
+            //// Check if the database exists
+            //if (settingsManager.DatabaseExists())
+            //{
+            //    Console.WriteLine("Database exists.");
+            //}
+            //else
+            //{
+            //    Console.WriteLine("Database does not exist. Creating...");
+            //    settingsManager.CreateDatabase();
+            //}
 
             if (Properties.OptionsStartupExitPage.Default.SingleInstance)
                 StartApplicationAsSingleInstance();
